@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <!--
+  © 2026 GEG 화성(깊이 e끌림). All rights reserved.
+  본 저작물은 「저작권법」에 따라 보호받으며, 저작권자의 허락 없는 복제·배포·수정을 금합니다.
+  문의: bacusiki777@gmail.com, for2102@jimj.kr
+  BUILD: GEGHS-DEEPE-2026
+-->
+<!--
   ============================================================
   © 2026 GEG화성(깊이 e끌림). All rights reserved.
 
@@ -2853,6 +2859,37 @@
     /* ---- start ---- */
     SYNC.init();
   </script>
+<script>
+/* 체험 모드 안내 배너 (전 앱 일관) */
+(function () {
+  function isDemo() {
+    try {
+      if (/[#&]c=/.test(location.hash || '')) return false;
+      for (var j = 0; j < localStorage.length; j++) {
+        var k = localStorage.key(j) || '';
+        if (/exec|gasurl|serverurl|sheet_api|gas_exec|appserverurl|endpoint/i.test(k) && localStorage.getItem(k)) return false;
+      }
+      return true;
+    } catch (e) { return true; }
+  }
+  function show() {
+    if (document.getElementById('__demoBar')) return;
+    if (!isDemo()) return;
+    var bar = document.createElement('div');
+    bar.id = '__demoBar';
+    bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:2147483000;background:#1f2937;color:#fff;font-size:13px;line-height:1.45;padding:9px 38px calc(9px + env(safe-area-inset-bottom)) 14px;text-align:center;font-family:sans-serif;box-shadow:0 -2px 10px rgba(0,0,0,0.25);';
+    bar.innerHTML = '체험 모드예요 · 활동 기록은 이 기기에만 저장돼요(이어하기 가능). 선생님이 구글 시트를 연결하면 시트에 저장됩니다.';
+    var x = document.createElement('button');
+    x.type = 'button'; x.setAttribute('aria-label', '닫기'); x.textContent = '\u2715';
+    x.style.cssText = 'position:absolute;right:8px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:#fff;font-size:16px;line-height:1;cursor:pointer;padding:6px;';
+    x.onclick = function () { document.body.classList.remove('has-demo-bar'); try { bar.remove(); } catch (e) { bar.style.display = 'none'; } };
+    bar.appendChild(x);
+    document.body.appendChild(bar);
+    document.body.classList.add('has-demo-bar');
+  }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', show); } else { show(); }
+})();
+</script>
 </body>
 
 </html>
